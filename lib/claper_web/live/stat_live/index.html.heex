@@ -233,7 +233,7 @@
                 <div class="bg-gray-900 w-full p-6 my-5 text-black shadow-lg rounded-md">
                   <div class="w-full h-full flex items-center justify-between mb-4">
                     <p class="text-white text-xl font-semibold">{poll.title}</p>
-                    <%= link to: ~p"/export/polls/#{poll.id}", class: "text-sm text-white bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
+                    <%= link to: ~p"/export/polls/#{poll.id}", class: "text-sm text-primary-content bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -295,7 +295,7 @@
                   </span>
 
                   <%= if length(form.form_submits) > 0 do %>
-                    <%= link to: ~p"/export/forms/#{form.id}", class: "text-sm text-white bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
+                    <%= link to: ~p"/export/forms/#{form.id}", class: "text-sm text-primary-content bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -375,7 +375,7 @@
           <div>
             <%= if length(@posts) > 0 do %>
               <div class="flex justify-start mb-4">
-                <%= link to: ~p"/export/#{@event.uuid}/messages", class: "text-sm text-white bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
+                <%= link to: ~p"/export/#{@event.uuid}/messages", class: "text-sm text-primary-content bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -417,7 +417,7 @@
                     <div class="mb-4">
                       <div class="w-full flex items-center justify-between">
                         <p class="text-white text-xl font-semibold mb-2">{quiz.title}</p>
-                        <%= link to: ~p"/export/quizzes/#{quiz.id}", class: "text-sm text-white bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
+                        <%= link to: ~p"/export/quizzes/#{quiz.id}", class: "text-sm text-primary-content bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -491,7 +491,7 @@
           <div>
             <%= if length(@transcriptions) > 0 do %>
               <div class="flex justify-start mb-4">
-                <%= link to: ~p"/export/#{@event.uuid}/transcriptions", class: "text-sm text-white bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
+                <%= link to: ~p"/export/#{@event.uuid}/transcriptions", class: "text-sm text-primary-content bg-primary-500 hover:bg-primary-600 rounded-md px-3 py-1 flex items-center gap-1", method: :post, target: "_blank" do %>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

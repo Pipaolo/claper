@@ -47,7 +47,7 @@ defmodule ClaperWeb.EventCardComponentTest do
       refute html =~ "showActions"
     end
 
-    test "uses the CCFII mark when an event has no thumbnail", %{conn: conn, user: user} do
+    test "uses the brand mark when an event has no thumbnail", %{conn: conn, user: user} do
       presentation_file = create_event(user, NaiveDateTime.utc_now(), nil, %{length: 0})
       {:ok, view, _html} = live(conn, "/events")
 
@@ -55,13 +55,13 @@ defmodule ClaperWeb.EventCardComponentTest do
 
       assert has_element?(
                view,
-               ~s(#{card} img[src="/images/ccfii-present-mark.png"][alt="CCFII Present"])
+               ~s(#{card} img[src="/images/claper-mark.png"][alt="Claper"])
              )
 
       refute has_element?(view, ~s(#{card} img[src="/images/logo.svg"]))
     end
 
-    test "uses the CCFII mark while a presentation is processing", %{conn: conn, user: user} do
+    test "uses the brand mark while a presentation is processing", %{conn: conn, user: user} do
       presentation_file = create_event(user, NaiveDateTime.utc_now(), nil, %{status: "progress"})
       {:ok, view, _html} = live(conn, "/events")
 
@@ -69,7 +69,7 @@ defmodule ClaperWeb.EventCardComponentTest do
 
       assert has_element?(
                view,
-               ~s(#{card} img.animate-pulse[src="/images/ccfii-present-mark.png"][alt="CCFII Present"])
+               ~s(#{card} img.animate-pulse[src="/images/claper-mark.png"][alt="Claper"])
              )
 
       refute has_element?(view, ~s(#{card} img[src="/images/logo.svg"]))

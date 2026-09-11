@@ -234,7 +234,7 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
             }
             phx-value-id={@event.uuid}
             phx-click="terminate"
-            class="btn btn-outline flex-1 border-primary-700 text-primary-700 hover:border-primary-700 hover:bg-primary-700 hover:text-white"
+            class="btn btn-outline flex-1 border-primary text-primary hover:border-primary hover:bg-primary hover:text-primary-content"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -452,7 +452,7 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
                 }
                 phx-value-id={@event.uuid}
                 phx-click="terminate"
-                class="btn btn-outline border-primary-700 text-primary-700 hover:border-primary-700 hover:bg-primary-700 hover:text-white"
+                class="btn btn-outline border-primary text-primary hover:border-primary hover:bg-primary hover:text-primary-content"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -705,7 +705,7 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
                 }
                 phx-value-id={@event.uuid}
                 phx-click="terminate"
-                class="btn btn-outline flex-1 border-primary-700 text-primary-700 hover:border-primary-700 hover:bg-primary-700 hover:text-white"
+                class="btn btn-outline flex-1 border-primary text-primary hover:border-primary hover:bg-primary hover:text-primary-content"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

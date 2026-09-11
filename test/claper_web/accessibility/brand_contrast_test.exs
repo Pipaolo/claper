@@ -1,37 +1,37 @@
-defmodule ClaperWeb.Accessibility.CCFIIContrastTest do
+defmodule ClaperWeb.Accessibility.BrandContrastTest do
   use ExUnit.Case, async: true
 
   @pairs [
-    {"white on maroon", "#FFFFFF", "#810E0E", 7.0},
-    {"warm black on gold", "#120A0A", "#FAA739", 7.0},
-    {"off-white on warm black", "#F7EDED", "#120A0A", 7.0},
-    {"muted copy on dark brown", "#B99B9B", "#1E1414", 7.0},
-    {"white on info", "#FFFFFF", "#3567FF", 4.5},
+    {"ink on pink", "#0F1522", "#FC85AE", 7.0},
+    {"ink on blue", "#0F1522", "#51A2FF", 4.5},
+    {"off-white on darker navy", "#F4F6FB", "#2B354A", 7.0},
+    {"muted copy on navy", "#C5CDDC", "#303A52", 7.0},
+    {"ink on info", "#0F1522", "#51A2FF", 4.5},
     {"white on success", "#FFFFFF", "#147A4C", 4.5},
     {"white on error", "#FFFFFF", "#C12B34", 4.5},
-    {"gold focus on warm black", "#FAA739", "#120A0A", 3.0},
-    {"muted boundary on dark brown", "#B99B9B", "#1E1414", 3.0},
-    {"light error action on dark brown", "#F0A4AA", "#1E1414", 4.5},
-    {"light success action on dark brown", "#9DDCBC", "#1E1414", 4.5}
+    {"pink focus on navy", "#FC85AE", "#303A52", 3.0},
+    {"muted boundary on navy", "#C5CDDC", "#303A52", 3.0},
+    {"light error action on navy", "#F0A4AA", "#303A52", 4.5},
+    {"light success action on navy", "#9DDCBC", "#303A52", 4.5}
   ]
 
   @semantic_tokens [
-    {"color-primary", "#810E0E"},
-    {"color-primary-content", "#FFFFFF"},
-    {"color-secondary", "#FAA739"},
-    {"color-secondary-content", "#120A0A"},
-    {"color-base-100", "#1E1414"},
-    {"color-base-200", "#120A0A"},
-    {"color-base-content", "#F7EDED"},
-    {"color-info", "#3567FF"},
-    {"color-info-content", "#FFFFFF"},
+    {"color-primary", "#FC85AE"},
+    {"color-primary-content", "#0F1522"},
+    {"color-secondary", "#51A2FF"},
+    {"color-secondary-content", "#0F1522"},
+    {"color-base-100", "#303A52"},
+    {"color-base-200", "#2B354A"},
+    {"color-base-content", "#F4F6FB"},
+    {"color-info", "#51A2FF"},
+    {"color-info-content", "#0F1522"},
     {"color-success", "#147A4C"},
     {"color-success-content", "#FFFFFF"},
     {"color-error", "#C12B34"},
     {"color-error-content", "#FFFFFF"},
-    {"color-neutral-400", "#B99B9B"},
-    {"color-neutral-100", "#F7EDED"},
-    {"color-neutral-900", "#1E1414"}
+    {"color-neutral-400", "#C5CDDC"},
+    {"color-neutral-100", "#F4F6FB"},
+    {"color-neutral-900", "#303A52"}
   ]
 
   test "approved foreground and background pairs meet their WCAG thresholds" do
@@ -58,8 +58,8 @@ defmodule ClaperWeb.Accessibility.CCFIIContrastTest do
     [button_rules] =
       Regex.run(~r/@utility btn-gradient \{(.*?)\n\}/s, app_css, capture: :all_but_first)
 
-    assert button_rules =~ "background: #810E0E;"
-    assert button_rules =~ "color: #FFFFFF;"
+    assert button_rules =~ "background: #FC85AE;"
+    assert button_rules =~ "color: #0F1522;"
     refute button_rules =~ "linear-gradient"
   end
 

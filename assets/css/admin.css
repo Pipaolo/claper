@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import './theme-config.css';
 @plugin "daisyui" {
-  themes: ccfii-present --default;
+  themes: claper --default;
 }
 
 @utility btn {

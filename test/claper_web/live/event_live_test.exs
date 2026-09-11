@@ -519,7 +519,7 @@ defmodule ClaperWeb.EventLiveTest do
 
       assert has_element?(join_live, "#form")
       assert has_element?(join_live, "#input[placeholder='ABCD1234']")
-      assert has_element?(join_live, ".ccfii-join-page")
+      assert has_element?(join_live, ".claper-join-page")
       assert has_element?(join_live, "#input.join-code-input")
       assert has_element?(join_live, "#submit.btn-primary")
       assert has_element?(join_live, ~s(#input[maxlength="10"][required][autofocus]))
@@ -531,8 +531,8 @@ defmodule ClaperWeb.EventLiveTest do
       join_css = Path.expand("../../../assets/css/app.css", __DIR__) |> File.read!()
 
       assert join_css =~ """
-             .ccfii-join-page .ccfii-join-menu-overlay button:focus-visible {
-               outline: 2px solid #120A0A;
+             .claper-join-page .claper-join-menu-overlay button:focus-visible {
+               outline: 2px solid #0F1522;
              """
     end
 

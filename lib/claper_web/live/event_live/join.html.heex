@@ -1,8 +1,8 @@
-<div class="ccfii-join-page min-h-screen">
+<div class="claper-join-page min-h-screen">
   <div
     x-data="{open: false}"
     id="menu"
-    class="ccfii-join-menu w-full py-4 px-5 md:px-8 relative z-20"
+    class="claper-join-menu w-full py-4 px-5 md:px-8 relative z-20"
     phx-update="ignore"
   >
     <div class="flex items-center justify-between max-w-6xl mx-auto">
@@ -11,7 +11,7 @@
       <div
         x-show="open"
         x-transition
-        class="ccfii-join-menu-overlay fixed inset-0 z-50 flex flex-col items-center justify-center space-y-6 md:hidden"
+        class="claper-join-menu-overlay fixed inset-0 z-50 flex flex-col items-center justify-center space-y-6 md:hidden"
         @click.away="open = false"
       >
         <button
@@ -30,7 +30,7 @@
           </svg>
         </button>
         <a
-          href="https://ccfii.org"
+          href="https://paolotolentino.com"
           target="_blank"
           rel="noopener noreferrer"
           class="text-lg font-semibold transition-colors"
@@ -50,7 +50,7 @@
 
       <button
         @click="open = true"
-        class="ccfii-join-menu-toggle p-2 md:hidden"
+        class="claper-join-menu-toggle p-2 md:hidden"
         aria-label={gettext("Open menu")}
       >
         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,10 +66,10 @@
 
       <div class="hidden md:flex items-center gap-6">
         <a
-          href="https://ccfii.org"
+          href="https://paolotolentino.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="ccfii-join-link text-sm font-medium transition-colors"
+          class="claper-join-link text-sm font-medium transition-colors"
         >
           {gettext("About")}
         </a>
@@ -89,10 +89,10 @@
   <div class="relative z-10 flex flex-col justify-center px-5 pb-14 pt-10 md:px-8 md:pb-20 md:pt-16">
     <div class="mx-auto w-full max-w-xl text-center">
       <div class="mb-14 md:mb-16">
-        <h1 class="text-4xl font-bold text-[#F7EDED] font-display md:text-5xl">
+        <h1 class="text-4xl font-bold text-[#F4F6FB] font-display md:text-5xl">
           {gettext("Join the event")}
         </h1>
-        <p class="mx-auto mt-4 max-w-md text-base text-[#B99B9B] md:text-lg">
+        <p class="mx-auto mt-4 max-w-md text-base text-[#C5CDDC] md:text-lg">
           {gettext("Enter the code shared by the presenter")}
         </p>
       </div>
@@ -100,7 +100,7 @@
       <%= form_for :event, ~p"/join", ["phx-submit": "join", id: "form", class: "mx-auto max-w-lg"], fn f -> %>
         <div>
           <div class="mt-5 flex items-center gap-3 md:gap-4">
-            <span class="text-2xl font-semibold text-[#B99B9B] md:text-4xl">#</span>
+            <span class="text-2xl font-semibold text-[#C5CDDC] md:text-4xl">#</span>
             {text_input(f, :code,
               required: true,
               autofocus: true,
@@ -147,11 +147,11 @@
         </div>
 
         <%= if @last_event do %>
-          <div class="mt-10 border-t border-[#523D3D] pt-6">
-            <p class="text-sm text-[#B99B9B]">{gettext("Return to your last event")}</p>
+          <div class="mt-10 border-t border-[#4B5878] pt-6">
+            <p class="text-sm text-[#C5CDDC]">{gettext("Return to your last event")}</p>
             <.link
               href={~p"/e/#{@last_event.code}"}
-              class="ccfii-join-link mt-2 inline-flex items-center gap-2 text-base font-medium transition-colors"
+              class="claper-join-link mt-2 inline-flex items-center gap-2 text-base font-medium transition-colors"
             >
               <span>{@last_event.name}</span>
               <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -168,11 +168,11 @@
         <% end %>
       <% end %>
 
-      <div class="mt-16 text-sm text-[#B99B9B]">
+      <div class="mt-16 text-sm text-[#C5CDDC]">
         <span>{gettext("Are you a presenter?")}</span>
         <.link
           href={~p"/users/register"}
-          class="ccfii-join-link ml-2 font-medium transition-colors"
+          class="claper-join-link ml-2 font-medium transition-colors"
         >
           {gettext("Start creating")}
         </.link>

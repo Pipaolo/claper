@@ -6,7 +6,7 @@ defmodule ClaperWeb.BrandComponentsTest do
   alias ClaperWeb.BrandComponents
 
   @png_signature <<137, 80, 78, 71, 13, 10, 26, 10>>
-  @runtime_brand_assets ["ccfii-present-logo.png", "ccfii-present-mark.png"]
+  @runtime_brand_assets ["claper-logo.png", "claper-mark.png"]
 
   test "committed runtime brand image assets exist and are PNGs" do
     for filename <- @runtime_brand_assets do
@@ -31,14 +31,14 @@ defmodule ClaperWeb.BrandComponentsTest do
 
   test "renders the accessible full lockup" do
     html = render_component(&BrandComponents.logo/1, %{variant: :full, class: "h-10"})
-    assert html =~ ~s(src="/images/ccfii-present-logo.png")
-    assert html =~ ~s(alt="CCFII Present")
+    assert html =~ ~s(src="/images/claper-logo.png")
+    assert html =~ ~s(alt="Claper")
     assert html =~ ~s(class="h-10")
   end
 
   test "renders the compact mark" do
     html = render_component(&BrandComponents.logo/1, %{variant: :mark})
-    assert html =~ ~s(src="/images/ccfii-present-mark.png")
+    assert html =~ ~s(src="/images/claper-mark.png")
   end
 
   test "renders safe upstream attribution" do

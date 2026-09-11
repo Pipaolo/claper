@@ -12,7 +12,7 @@ defmodule ClaperWeb.Lti.RegistrationControllerTest do
     on_exit(fn -> Req.default_options(previous_options) end)
   end
 
-  test "registers the exact CCFII Present LMS identity", %{conn: conn} do
+  test "registers the exact Claper LMS identity", %{conn: conn} do
     jwk_fixture()
     test_pid = self()
 
@@ -32,7 +32,7 @@ defmodule ClaperWeb.Lti.RegistrationControllerTest do
           send(test_pid, {:registration_request, Jason.decode!(body)})
 
           Req.Test.json(conn, %{
-            "client_id" => "ccfii-client",
+            "client_id" => "claper-client",
             "https://purl.imsglobal.org/spec/lti-tool-configuration" => %{
               "deployment_id" => 42
             }
@@ -49,9 +49,9 @@ defmodule ClaperWeb.Lti.RegistrationControllerTest do
     assert html_response(conn, 200) =~ "Registration completed"
 
     assert_receive {:registration_request, registration}
-    assert registration["client_name"] == "CCFII Present"
+    assert registration["client_name"] == "Claper"
 
     assert registration["logo_uri"] ==
-             "http://localhost:4000/images/ccfii-present-logo.png"
+             "http://localhost:4000/images/claper-logo.png"
   end
 end

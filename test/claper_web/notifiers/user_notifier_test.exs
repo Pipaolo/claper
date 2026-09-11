@@ -3,7 +3,7 @@ defmodule ClaperWeb.Notifiers.UserNotifierTest do
 
   alias ClaperWeb.Notifiers.UserNotifier
 
-  test "magic email uses the CCFII subject and preserves the configured sender override" do
+  test "magic email uses the Claper subject and preserves the configured sender override" do
     previous_mail = Application.get_env(:claper, :mail)
 
     Application.put_env(:claper, :mail,
@@ -15,18 +15,18 @@ defmodule ClaperWeb.Notifiers.UserNotifierTest do
 
     email = UserNotifier.magic("presenter@example.com", "https://present.example/magic-token")
 
-    assert email.subject == "Connect to CCFII Present"
+    assert email.subject == "Connect to Claper"
     assert email.from == {"Configured Sender", "noreply@example.com"}
     assert email.html_body =~ "https://present.example/magic-token"
   end
 
-  test "runtime mail configuration defaults to CCFII Present and honors MAIL_FROM_NAME" do
+  test "runtime mail configuration defaults to Claper and honors MAIL_FROM_NAME" do
     previous_config_dir = System.get_env("CONFIG_DIR")
     previous_from_name = System.get_env("MAIL_FROM_NAME")
 
     System.put_env(
       "CONFIG_DIR",
-      Path.join(System.tmp_dir!(), "ccfii-missing-config-#{System.unique_integer([:positive])}")
+      Path.join(System.tmp_dir!(), "claper-missing-config-#{System.unique_integer([:positive])}")
     )
 
     on_exit(fn ->
@@ -36,7 +36,7 @@ defmodule ClaperWeb.Notifiers.UserNotifierTest do
 
     System.delete_env("MAIL_FROM_NAME")
     default_config = Config.Reader.read!("config/runtime.exs")
-    assert default_config[:claper][:mail][:from_name] == "CCFII Present"
+    assert default_config[:claper][:mail][:from_name] == "Claper"
 
     System.put_env("MAIL_FROM_NAME", "Environment Sender")
     override_config = Config.Reader.read!("config/runtime.exs")

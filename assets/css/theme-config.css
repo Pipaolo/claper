@@ -1,28 +1,28 @@
 @plugin "daisyui/theme" {
-  name: "ccfii-present";
+  name: "claper";
   default: true;
   prefersdark: true;
   color-scheme: dark;
 
   /* Keep semantic content/surface pairs aligned with the WCAG contrast contract. */
-  --color-primary: #810E0E;
-  --color-primary-content: #FFFFFF;
-  --color-secondary: #FAA739;
-  --color-secondary-content: #120A0A;
-  --color-accent: #3567FF;
-  --color-accent-content: #FFFFFF;
-  --color-neutral: #2A1C1C;
-  --color-neutral-content: #F7EDED;
-  --color-base-100: #1E1414;
-  --color-base-200: #120A0A;
-  --color-base-300: #2A1C1C;
-  --color-base-content: #F7EDED;
-  --color-info: #3567FF;
-  --color-info-content: #FFFFFF;
+  --color-primary: #FC85AE;
+  --color-primary-content: #0F1522;
+  --color-secondary: #51A2FF;
+  --color-secondary-content: #0F1522;
+  --color-accent: #51A2FF;
+  --color-accent-content: #0F1522;
+  --color-neutral: #2B354A;
+  --color-neutral-content: #F4F6FB;
+  --color-base-100: #303A52;
+  --color-base-200: #2B354A;
+  --color-base-300: #3F4C6C;
+  --color-base-content: #F4F6FB;
+  --color-info: #51A2FF;
+  --color-info-content: #0F1522;
   --color-success: #147A4C;
   --color-success-content: #FFFFFF;
   --color-warning: #FAA739;
-  --color-warning-content: #120A0A;
+  --color-warning-content: #0F1522;
   --color-error: #C12B34;
   --color-error-content: #FFFFFF;
 
@@ -39,8 +39,8 @@
 
 @theme {
   /* Preserve custom CSS variables for non-DaisyUI usage */
-  --font-display: "Montserrat", sans-serif;
-  --font-family-sans: "Roboto", sans-serif;
+  --font-display: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-family-serif: "Merriweather", serif;
 
   /* Preserve shadows from theme.css */
@@ -61,41 +61,41 @@
   --text-body: 16px;
   --text-small-body: 14px;
 
-  /* Primary Colors - CCFII Maroon */
-  --color-primary-50: #FBEAEA;
-  --color-primary-100: #F5D3D3;
-  --color-primary-200: #E9AAAA;
-  --color-primary-300: #DC7B7B;
-  --color-primary-400: #C84A4A;
-  --color-primary-500: #810E0E;
-  --color-primary-600: #6A0B0B;
-  --color-primary-700: #540909;
-  --color-primary-800: #3E0606;
-  --color-primary-900: #280404;
+  /* Primary Colors - Pink */
+  --color-primary-50: #FFF3F7;
+  --color-primary-100: #FFE6EF;
+  --color-primary-200: #FECEDF;
+  --color-primary-300: #FEB6CF;
+  --color-primary-400: #FD9DBF;
+  --color-primary-500: #FC85AE;
+  --color-primary-600: #E5689A;
+  --color-primary-700: #C04A76;
+  --color-primary-800: #9E3C62;
+  --color-primary-900: #6E2A45;
 
-  /* Secondary Colors - CCFII Gold */
-  --color-secondary-50: #FFF7E8;
-  --color-secondary-100: #FEEBC8;
-  --color-secondary-200: #FDD79A;
-  --color-secondary-300: #FCC36B;
-  --color-secondary-400: #FBB144;
-  --color-secondary-500: #FAA739;
-  --color-secondary-600: #CF7A20;
-  --color-secondary-700: #A55F18;
-  --color-secondary-800: #7C4511;
-  --color-secondary-900: #532D0A;
+  /* Secondary Colors - Blue */
+  --color-secondary-50: #EEF6FF;
+  --color-secondary-100: #DBEAFE;
+  --color-secondary-200: #BEDBFF;
+  --color-secondary-300: #8EC5FF;
+  --color-secondary-400: #6FB3FF;
+  --color-secondary-500: #51A2FF;
+  --color-secondary-600: #2B7FFF;
+  --color-secondary-700: #155DFC;
+  --color-secondary-800: #1447E6;
+  --color-secondary-900: #193CB8;
 
-  /* Neutral Colors - warm dark console surfaces */
-  --color-neutral-50: #FCF9F9;
-  --color-neutral-100: #F7EDED;
-  --color-neutral-200: #E9DADA;
-  --color-neutral-300: #D7C1C1;
-  --color-neutral-400: #B99B9B;
-  --color-neutral-500: #947575;
-  --color-neutral-600: #735858;
-  --color-neutral-700: #523D3D;
-  --color-neutral-800: #382828;
-  --color-neutral-900: #1E1414;
+  /* Neutral Colors - navy console surfaces */
+  --color-neutral-50: #FAFBFD;
+  --color-neutral-100: #F4F6FB;
+  --color-neutral-200: #E8ECF3;
+  --color-neutral-300: #D8DEE8;
+  --color-neutral-400: #C5CDDC;
+  --color-neutral-500: #8F9AB3;
+  --color-neutral-600: #66708A;
+  --color-neutral-700: #4B5878;
+  --color-neutral-800: #3F4C6C;
+  --color-neutral-900: #303A52;
 
   /* Supporting Red Colors */
   --color-supporting-red-50: #FCEBED;

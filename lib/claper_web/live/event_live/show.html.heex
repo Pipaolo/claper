@@ -113,7 +113,7 @@
           <button
             type="button"
             phx-click={toggle_side_menu()}
-            class="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary-500 px-4 text-sm font-bold uppercase text-white shadow-lg shadow-primary-900/30"
+            class="inline-flex min-h-11 items-center gap-2 rounded-full bg-primary-500 px-4 text-sm font-bold uppercase text-primary-content shadow-lg shadow-primary-900/30"
           >
             <img src="/images/icons/menu-outline.svg" class="h-5 w-5" />
             <span>#{@event.code}</span>
@@ -143,7 +143,7 @@
       >
         <div
           id="new-interaction-badge"
-          class="pointer-events-none absolute left-1/2 top-3 z-30 hidden -translate-x-1/2 rounded-full bg-primary-500 px-3 py-1 text-xs font-bold text-white shadow-lg"
+          class="pointer-events-none absolute left-1/2 top-3 z-30 hidden -translate-x-1/2 rounded-full bg-primary-500 px-3 py-1 text-xs font-bold text-primary-content shadow-lg"
         >
           {gettext("New interaction")}
         </div>
@@ -379,7 +379,7 @@
         <button
           id="new-messages-chip"
           type="button"
-          class="absolute bottom-20 left-1/2 z-20 hidden -translate-x-1/2 rounded-full bg-primary-500 px-4 py-2 text-xs font-bold text-white shadow-xl"
+          class="absolute bottom-20 left-1/2 z-20 hidden -translate-x-1/2 rounded-full bg-primary-500 px-4 py-2 text-xs font-bold text-primary-content shadow-xl"
         >
           <span data-unread-count></span> {gettext("new messages")}&nbsp;↓
         </button>

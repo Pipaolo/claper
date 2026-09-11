@@ -80,9 +80,9 @@ defmodule ClaperWeb.Lti.RegistrationController do
       "redirect_uris" => [
         "#{url}/lti/launch"
       ],
-      "client_name" => gettext("CCFII Present"),
+      "client_name" => gettext("Claper"),
       "jwks_uri" => "#{url}/.well-known/jwks.json",
-      "logo_uri" => "#{url}/images/ccfii-present-logo.png",
+      "logo_uri" => "#{url}/images/claper-logo.png",
       "token_endpoint_auth_method" => "private_key_jwt",
       "scope" =>
         "https://purl.imsglobal.org/spec/lti-ags/scope/score https://purl.imsglobal.org/spec/lti-nrps/scope/contextmembership.readonly",

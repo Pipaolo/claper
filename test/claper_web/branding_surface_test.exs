@@ -10,17 +10,17 @@ defmodule ClaperWeb.BrandingSurfaceTest do
   alias Claper.Accounts.UserToken
   alias Claper.Repo
 
-  @brand_logo "/images/ccfii-present-logo.png"
+  @brand_logo "/images/claper-logo.png"
   @attribution "Powered by Claper"
 
-  test "account login uses the CCFII Present identity", %{conn: conn} do
+  test "account login uses the Claper identity", %{conn: conn} do
     html = conn |> get(~p"/users/log_in") |> html_response(200)
 
-    assert html =~ "CCFII Present"
+    assert html =~ "Claper"
     assert html =~ @brand_logo
-    assert html =~ "ccfii-auth-backdrop"
+    assert html =~ "claper-auth-backdrop"
     assert html =~ @attribution
-    assert title(html) == "CCFII Present"
+    assert title(html) == "Claper"
     refute html =~ " · Claper"
   end
 
@@ -34,9 +34,9 @@ defmodule ClaperWeb.BrandingSurfaceTest do
     edit_html = conn |> get(~p"/users/reset_password/#{token}") |> html_response(200)
 
     for html <- [request_html, edit_html] do
-      assert html =~ "CCFII Present"
+      assert html =~ "Claper"
       assert html =~ @brand_logo
-      assert html =~ "ccfii-auth-backdrop"
+      assert html =~ "claper-auth-backdrop"
       assert html =~ @attribution
     end
   end
@@ -47,13 +47,13 @@ defmodule ClaperWeb.BrandingSurfaceTest do
 
     {:ok, _view, html} = live(conn, ~p"/events")
 
-    assert html =~ "CCFII Present"
+    assert html =~ "Claper"
     assert html =~ @attribution
-    assert title(html) == "Dashboard · CCFII Present"
+    assert title(html) == "Dashboard · Claper"
     refute html =~ " · Claper"
   end
 
-  test "admin chrome identifies CCFII Present Admin and includes attribution", %{conn: conn} do
+  test "admin chrome identifies Claper Admin and includes attribution", %{conn: conn} do
     ensure_role("user")
     ensure_role("admin")
 
@@ -63,8 +63,8 @@ defmodule ClaperWeb.BrandingSurfaceTest do
     {:ok, _view, html} = conn |> log_in_user(user) |> live(~p"/admin")
 
     assert html =~ @attribution
-    assert title(html) == "Dashboard · CCFII Present Admin"
-    assert html =~ ~s(data-theme="ccfii-present")
+    assert title(html) == "Dashboard · Claper Admin"
+    assert html =~ ~s(data-theme="claper")
     refute html =~ ~s(data-theme="light")
     refute html =~ " · Claper Admin"
   end
@@ -208,10 +208,10 @@ defmodule ClaperWeb.BrandingSurfaceTest do
 
   test "HTML surfaces reference fingerprinted release assets", %{conn: conn} do
     fingerprints = %{
-      "/assets/app.css" => "/assets/app-ccfii-test.css?vsn=d",
-      "/assets/admin.css" => "/assets/admin-ccfii-test.css?vsn=d",
-      "/assets/custom.css" => "/assets/custom-ccfii-test.css?vsn=d",
-      "/assets/app.js" => "/assets/app-ccfii-test.js?vsn=d"
+      "/assets/app.css" => "/assets/app-claper-test.css?vsn=d",
+      "/assets/admin.css" => "/assets/admin-claper-test.css?vsn=d",
+      "/assets/custom.css" => "/assets/custom-claper-test.css?vsn=d",
+      "/assets/app.js" => "/assets/app-claper-test.js?vsn=d"
     }
 
     Phoenix.Config.clear_cache(ClaperWeb.Endpoint)
@@ -262,14 +262,14 @@ defmodule ClaperWeb.BrandingSurfaceTest do
     assert admin_html =~ fingerprints["/assets/admin.css"]
   end
 
-  test "error surfaces identify the deployed product as CCFII Present" do
+  test "error surfaces identify the deployed product as Claper" do
     not_found_html = Phoenix.View.render_to_string(ClaperWeb.ErrorView, "404.html", %{})
     server_error_html = Phoenix.View.render_to_string(ClaperWeb.ErrorView, "500.html", %{})
     csrf_error_html = Phoenix.View.render_to_string(ClaperWeb.ErrorView, "csrf_error.html", %{})
 
-    assert title(not_found_html) == "Not found - CCFII Present"
-    assert title(server_error_html) == "Not found - CCFII Present"
-    assert csrf_error_html =~ "Clear cookies (at least for CCFII Present domain)"
+    assert title(not_found_html) == "Not found - Claper"
+    assert title(server_error_html) == "Not found - Claper"
+    assert csrf_error_html =~ "Clear cookies (at least for Claper domain)"
 
     for html <- [not_found_html, server_error_html, csrf_error_html] do
       refute html =~ "Claper"

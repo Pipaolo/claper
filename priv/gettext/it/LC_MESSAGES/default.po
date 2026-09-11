@@ -3560,12 +3560,12 @@ msgstr "name@example.com"
 
 #: lib/claper_web/templates/lti/registration/new.html.heex:36
 #, elixir-autogen, elixir-format
-msgid "Add CCFII Present"
+msgid "Add Claper"
 msgstr ""
 
 #: lib/claper_web/templates/lti/registration/new.html.heex:24
 #, elixir-autogen, elixir-format
-msgid "Bring CCFII Present to your LMS"
+msgid "Bring Claper to your LMS"
 msgstr ""
 
 #: lib/claper_web/components/brand_components.ex:15
@@ -3581,28 +3581,28 @@ msgstr ""
 #: lib/claper_web/templates/layout/user.html.heex:8
 #: lib/claper_web/templates/layout/user.html.heex:9
 #, elixir-autogen, elixir-format
-msgid "CCFII Present"
+msgid "Claper"
 msgstr ""
 
 #: lib/claper_web/templates/layout/admin.html.heex:8
 #, elixir-autogen, elixir-format
-msgid "CCFII Present Admin"
+msgid "Claper Admin"
 msgstr ""
 
 #: lib/claper_web/templates/layout/email.html.heex:6
 #, elixir-autogen, elixir-format
-msgid "CCFII Present account email"
+msgid "Claper account email"
 msgstr ""
 
 #: lib/claper_web/templates/user_notifier/welcome.html.heex:22
 #, elixir-autogen, elixir-format, fuzzy
-msgid "Congrats! You've taken the first step to improving your presentations. Here are the next steps to create step up your presentations with CCFII Present:"
+msgid "Congrats! You've taken the first step to improving your presentations. Here are the next steps to create step up your presentations with Claper:"
 msgstr ""
 
 #: lib/claper_web/notifiers/user_notifier.ex:12
 #: lib/claper_web/templates/user_notifier/magic.html.heex:17
 #, elixir-autogen, elixir-format
-msgid "Connect to CCFII Present"
+msgid "Connect to Claper"
 msgstr ""
 
 #: lib/claper_web/components/brand_components.ex:30
@@ -3612,18 +3612,18 @@ msgstr ""
 
 #: lib/claper_web/templates/user_registration/new.html.heex:18
 #, elixir-autogen, elixir-format, fuzzy
-msgid "Thousands of presenters already use CCFII Present to engage their audience in real time."
+msgid "Thousands of presenters already use Claper to engage their audience in real time."
 msgstr ""
 
 #: lib/claper_web/templates/error/csrf_error.html.heex:17
 #, elixir-autogen, elixir-format, fuzzy
-msgid "Clear cookies (at least for CCFII Present domain)"
+msgid "Clear cookies (at least for Claper domain)"
 msgstr ""
 
 #: lib/claper_web/templates/error/404.html.heex:8
 #: lib/claper_web/templates/error/500.html.heex:8
 #, elixir-autogen, elixir-format
-msgid "Not found - CCFII Present"
+msgid "Not found - Claper"
 msgstr ""
 
 #: lib/claper_web/live/event_live/join.html.heex:20
