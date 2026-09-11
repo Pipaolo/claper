@@ -12,6 +12,9 @@ database_url =
 
 db_ssl = get_var_from_path_or_env(config_dir, "DB_SSL", "false") |> String.to_existing_atom()
 
+# Railway's private network (*.railway.internal) resolves over IPv6.
+ecto_ipv6 = get_var_from_path_or_env(config_dir, "ECTO_IPV6", "false") in ~w(true 1)
+
 # Listen IP supports IPv4 and IPv6 addresses.
 listen_ip =
   (
@@ -213,7 +216,8 @@ config :claper, Claper.Repo,
   ],
   prepare: :unnamed,
   pool_size: pool_size,
-  queue_target: queue_target
+  queue_target: queue_target,
+  socket_options: if(ecto_ipv6, do: [:inet6], else: [])
 
 config :claper, ClaperWeb.Endpoint,
   url: [scheme: base_url.scheme, host: base_url.host, path: base_url.path, port: base_url.port],
