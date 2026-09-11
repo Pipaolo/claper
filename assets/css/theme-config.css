@@ -7,7 +7,7 @@
   /* Keep semantic content/surface pairs aligned with the WCAG contrast contract. */
   --color-primary: #FC85AE;
   --color-primary-content: #0F1522;
-  --color-secondary: #51A2FF;
+  --color-secondary: #FC85AE;
   --color-secondary-content: #0F1522;
   --color-accent: #51A2FF;
   --color-accent-content: #0F1522;
@@ -73,17 +73,17 @@
   --color-primary-800: #9E3C62;
   --color-primary-900: #6E2A45;
 
-  /* Secondary Colors - Blue */
-  --color-secondary-50: #EEF6FF;
-  --color-secondary-100: #DBEAFE;
-  --color-secondary-200: #BEDBFF;
-  --color-secondary-300: #8EC5FF;
-  --color-secondary-400: #6FB3FF;
-  --color-secondary-500: #51A2FF;
-  --color-secondary-600: #2B7FFF;
-  --color-secondary-700: #155DFC;
-  --color-secondary-800: #1447E6;
-  --color-secondary-900: #193CB8;
+  /* Secondary Colors - Pink (paolotolentino.com uses a single accent) */
+  --color-secondary-50: #FFF3F7;
+  --color-secondary-100: #FFE6EF;
+  --color-secondary-200: #FECEDF;
+  --color-secondary-300: #FEB6CF;
+  --color-secondary-400: #FD9DBF;
+  --color-secondary-500: #FC85AE;
+  --color-secondary-600: #E5689A;
+  --color-secondary-700: #C04A76;
+  --color-secondary-800: #9E3C62;
+  --color-secondary-900: #6E2A45;
 
   /* Neutral Colors - navy console surfaces */
   --color-neutral-50: #FAFBFD;

@@ -18,7 +18,7 @@ defmodule ClaperWeb.Accessibility.BrandContrastTest do
   @semantic_tokens [
     {"color-primary", "#FC85AE"},
     {"color-primary-content", "#0F1522"},
-    {"color-secondary", "#51A2FF"},
+    {"color-secondary", "#FC85AE"},
     {"color-secondary-content", "#0F1522"},
     {"color-base-100", "#303A52"},
     {"color-base-200", "#2B354A"},

@@ -78,11 +78,11 @@ defmodule ClaperWeb.Component.Badge do
   end
 
   defp style_classes(:contained, :primary) do
-    "bg-primary-500 text-white"
+    "bg-primary-500 text-primary-content"
   end
 
   defp style_classes(:contained, :secondary) do
-    "bg-secondary-500 text-white"
+    "bg-secondary-500 text-secondary-content"
   end
 
   defp style_classes(:contained, :accent) do

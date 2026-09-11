@@ -140,7 +140,7 @@ defmodule ClaperWeb.Component.Button do
 
   # Style classes
   defp style_classes(:primary) do
-    "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700 focus:ring-primary-500"
+    "bg-primary-500 text-primary-content hover:bg-primary-600 active:bg-primary-700 focus:ring-primary-500"
   end
 
   defp style_classes(:secondary) do
