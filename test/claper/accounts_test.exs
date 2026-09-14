@@ -8,6 +8,52 @@ defmodule Claper.AccountsTest do
 
   require Logger
 
+  describe "update_user_theme/2" do
+    test "saves the user's presentation colors as uppercase hex" do
+      user = user_fixture()
+
+      assert {:ok, _user} =
+               Accounts.update_user_theme(user, %{
+                 "theme_background" => "#020b43",
+                 "theme_accent" => "#0473ea",
+                 "theme_surface" => "#525355"
+               })
+
+      assert %User{
+               theme_background: "#020B43",
+               theme_accent: "#0473EA",
+               theme_surface: "#525355"
+             } = Accounts.get_user!(user.id)
+    end
+
+    test "rejects values that are not hex colors" do
+      assert {:error, changeset} =
+               Accounts.update_user_theme(user_fixture(), %{"theme_accent" => "blue"})
+
+      assert %{theme_accent: ["must be a hex color like #0473EA"]} = errors_on(changeset)
+    end
+
+    test "rejects a background or surface too light for the app's white text" do
+      assert {:error, changeset} =
+               Accounts.update_user_theme(user_fixture(), %{
+                 "theme_background" => "#F2F2F2",
+                 "theme_surface" => "#D9D9D9"
+               })
+
+      assert %{
+               theme_background: ["is too light for white text, pick a darker color"],
+               theme_surface: ["is too light for white text, pick a darker color"]
+             } = errors_on(changeset)
+    end
+
+    test "clearing a color restores the default for it" do
+      {:ok, user} = Accounts.update_user_theme(user_fixture(), %{"theme_accent" => "#0473EA"})
+
+      assert {:ok, _user} = Accounts.update_user_theme(user, %{"theme_accent" => ""})
+      assert %User{theme_accent: nil} = Accounts.get_user!(user.id)
+    end
+  end
+
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
       refute Accounts.get_user_by_email("unknown@example.com")

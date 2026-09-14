@@ -33,6 +33,7 @@ defmodule ClaperWeb.UserSettingsLive.Show do
      |> assign(:password_changeset, password_changeset)
      |> assign(:profile_changeset, profile_changeset)
      |> assign(:preferences_changeset, preferences_changeset)
+     |> assign(:theme_changeset, Accounts.User.theme_changeset(socket.assigns.current_user, %{}))
      |> assign(:is_external_user, oidc_accounts != [] or lti_accounts != [])
      |> assign(:oidc_accounts, oidc_accounts)
      |> assign(:lti_accounts, lti_accounts)
@@ -217,6 +218,35 @@ defmodule ClaperWeb.UserSettingsLive.Show do
   end
 
   @impl true
+  def handle_event("save", %{"action" => "update_theme", "user" => theme_params}, socket) do
+    case Accounts.update_user_theme(socket.assigns.current_user, theme_params) do
+      {:ok, _user} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, gettext("Your theme has been updated."))
+         |> redirect(to: ~p"/users/settings")}
+
+      {:error, changeset} ->
+        {:noreply, assign(socket, :theme_changeset, changeset)}
+    end
+  end
+
+  @impl true
+  def handle_event("reset_theme", _params, socket) do
+    {:ok, _user} =
+      Accounts.update_user_theme(socket.assigns.current_user, %{
+        theme_background: nil,
+        theme_accent: nil,
+        theme_surface: nil
+      })
+
+    {:noreply,
+     socket
+     |> put_flash(:info, gettext("Your theme has been reset."))
+     |> redirect(to: ~p"/users/settings")}
+  end
+
+  @impl true
   def handle_event("save", %{"action" => "set_password"} = params, socket) do
     %{"user" => user_params} = params
 
@@ -240,6 +270,15 @@ defmodule ClaperWeb.UserSettingsLive.Show do
   @impl true
   def handle_event("validate", _params, socket) do
     {:noreply, socket}
+  end
+
+  # Pickers start on the default Claper colors when the user hasn't chosen any.
+  defp theme_fields do
+    [
+      {:theme_background, gettext("Background"), "#303A52"},
+      {:theme_accent, gettext("Highlight"), "#FC85AE"},
+      {:theme_surface, gettext("Surface"), "#2B354A"}
+    ]
   end
 
   defp set_locale(user) when is_nil(user.locale) do

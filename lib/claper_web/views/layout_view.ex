@@ -35,6 +35,22 @@ defmodule ClaperWeb.LayoutView do
 
   def admin_active(_active_tab, _tab), do: ""
 
+  @doc """
+  CSS overriding the theme colors, or `""` for the default theme. Event pages use the
+  event owner's colors so attendees see the presenter's theme; other pages use the
+  signed-in user's.
+  """
+  def theme_css(assigns) do
+    case theme_owner(assigns) do
+      %Claper.Accounts.User{} = user -> ClaperWeb.Theme.css(user)
+      nil -> ""
+    end
+  end
+
+  defp theme_owner(%{event: %{user: %Claper.Accounts.User{} = owner}}), do: owner
+  defp theme_owner(%{current_user: %Claper.Accounts.User{} = user}), do: user
+  defp theme_owner(_assigns), do: nil
+
   def get_section_path(conn) do
     section = Enum.at(conn.path_info, 1)
 

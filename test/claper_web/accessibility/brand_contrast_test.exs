@@ -58,8 +58,9 @@ defmodule ClaperWeb.Accessibility.BrandContrastTest do
     [button_rules] =
       Regex.run(~r/@utility btn-gradient \{(.*?)\n\}/s, app_css, capture: :all_but_first)
 
-    assert button_rules =~ "background: #FC85AE;"
-    assert button_rules =~ "color: #0F1522;"
+    # The primary/primary-content pair is contrast-checked here and in ClaperWeb.Theme.
+    assert button_rules =~ "background: var(--color-primary);"
+    assert button_rules =~ "color: var(--color-primary-content);"
     refute button_rules =~ "linear-gradient"
   end
 

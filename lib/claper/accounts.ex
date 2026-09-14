@@ -408,6 +408,15 @@ defmodule Claper.Accounts do
   end
 
   @doc """
+  Updates the user's presentation colors. Blank values restore the default theme.
+  """
+  def update_user_theme(user, attrs) do
+    user
+    |> User.theme_changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
   Delivers the magic link email to the given user.
 
   ## Examples

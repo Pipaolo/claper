@@ -27,6 +27,9 @@ defmodule Claper.Accounts.User do
           is_randomized_password: boolean(),
           confirmed_at: NaiveDateTime.t() | nil,
           locale: String.t() | nil,
+          theme_background: String.t() | nil,
+          theme_accent: String.t() | nil,
+          theme_surface: String.t() | nil,
           events: [Claper.Events.Event.t()] | nil,
           role: Claper.Accounts.Role.t() | nil,
           role_id: integer() | nil,
@@ -45,6 +48,9 @@ defmodule Claper.Accounts.User do
     field :is_randomized_password, :boolean
     field :confirmed_at, :naive_datetime
     field :locale, :string
+    field :theme_background, :string
+    field :theme_accent, :string
+    field :theme_surface, :string
     field :deleted_at, :naive_datetime
 
     has_many :events, Claper.Events.Event
@@ -77,6 +83,33 @@ defmodule Claper.Accounts.User do
   def preferences_changeset(user, attrs) do
     user
     |> cast(attrs, [:locale])
+  end
+
+  @theme_colors [:theme_background, :theme_accent, :theme_surface]
+  @hex_color ~r/^#[0-9A-F]{6}$/
+
+  @doc """
+  A changeset for the user's presentation colors. Blank values restore the default theme.
+  """
+  def theme_changeset(user, attrs) do
+    Enum.reduce(@theme_colors, cast(user, attrs, @theme_colors), fn field, changeset ->
+      changeset
+      |> update_change(field, &(&1 && String.upcase(&1)))
+      |> validate_format(field, @hex_color, message: "must be a hex color like #0473EA")
+    end)
+    |> validate_dark_enough(:theme_background)
+    |> validate_dark_enough(:theme_surface)
+  end
+
+  # Text on backgrounds and surfaces is white, so they need AA contrast against it.
+  defp validate_dark_enough(changeset, field) do
+    validate_change(changeset, field, fn ^field, color ->
+      if Regex.match?(@hex_color, color) and Claper.Color.contrast(color, "#FFFFFF") < 4.5 do
+        [{field, "is too light for white text, pick a darker color"}]
+      else
+        []
+      end
+    end)
   end
 
   def profile_changeset(user, attrs) do

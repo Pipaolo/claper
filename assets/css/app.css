@@ -17,11 +17,11 @@
 }
 
 @utility btn-gradient {
-  background: #FC85AE;
+  background: var(--color-primary);
   border: none;
-  color: #0F1522;
+  color: var(--color-primary-content);
   &:hover {
-    background: #E5689A;
+    background: var(--color-primary-600);
   }
 }
 
@@ -52,7 +52,7 @@
   }
 
   :focus-visible {
-    outline: 3px solid #FC85AE;
+    outline: 3px solid var(--color-primary);
     outline-offset: 3px;
   }
 }

@@ -31,6 +31,46 @@ defmodule ClaperWeb.UserSettingsLive.ShowTest do
     assert updated_user.last_name == "Smith"
   end
 
+  test "saves the user's presentation colors", %{conn: conn, user: user} do
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+
+    view
+    |> form("#update_theme", %{
+      "user" => %{
+        "theme_background" => "#020B43",
+        "theme_accent" => "#0473EA",
+        "theme_surface" => "#525355"
+      }
+    })
+    |> render_submit()
+
+    assert_redirect(view, ~p"/users/settings")
+
+    assert %{theme_background: "#020B43", theme_accent: "#0473EA", theme_surface: "#525355"} =
+             Accounts.get_user!(user.id)
+  end
+
+  test "explains why a background is rejected", %{conn: conn} do
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+
+    html =
+      view
+      |> form("#update_theme", %{"user" => %{"theme_background" => "#F2F2F2"}})
+      |> render_submit()
+
+    assert html =~ "is too light for white text, pick a darker color"
+  end
+
+  test "resets the presentation colors to the default theme", %{conn: conn, user: user} do
+    {:ok, _user} = Accounts.update_user_theme(user, %{"theme_accent" => "#0473EA"})
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+
+    view |> element("#reset_theme") |> render_click()
+
+    assert_redirect(view, ~p"/users/settings")
+    assert %{theme_accent: nil} = Accounts.get_user!(user.id)
+  end
+
   test "requires both names", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/users/settings/edit/profile")
 
