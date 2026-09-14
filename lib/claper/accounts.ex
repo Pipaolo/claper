@@ -417,6 +417,43 @@ defmodule Claper.Accounts do
   end
 
   @doc """
+  Copies an uploaded logo into storage, points the user at it, and deletes the
+  logo it replaces. `extension` is the upload's extension, e.g. `".png"`.
+  """
+  def store_user_logo(%User{} = user, source_path, extension) do
+    random = :crypto.strong_rand_bytes(8) |> Base.url_encode64(padding: false)
+    logo_path = "/uploads/logos/#{user.id}-#{random}#{extension}"
+    destination = logo_file(logo_path)
+
+    File.mkdir_p!(Path.dirname(destination))
+    File.cp!(source_path, destination)
+
+    with {:ok, updated_user} <- set_user_logo(user, logo_path) do
+      delete_logo_file(user.logo_path)
+      {:ok, updated_user}
+    end
+  end
+
+  @doc "Removes the user's logo, falling back to the Claper logo."
+  def remove_user_logo(%User{} = user) do
+    with {:ok, updated_user} <- set_user_logo(user, nil) do
+      delete_logo_file(user.logo_path)
+      {:ok, updated_user}
+    end
+  end
+
+  defp set_user_logo(user, logo_path) do
+    user |> Ecto.Changeset.change(logo_path: logo_path) |> Repo.update()
+  end
+
+  defp delete_logo_file(nil), do: :ok
+  defp delete_logo_file(logo_path), do: File.rm(logo_file(logo_path))
+
+  # Logos are served by the /uploads Plug.Static in ClaperWeb.Endpoint.
+  defp logo_file("/uploads/" <> file),
+    do: Path.join([Application.get_env(:claper, :storage_dir), "uploads", file])
+
+  @doc """
   Delivers the magic link email to the given user.
 
   ## Examples

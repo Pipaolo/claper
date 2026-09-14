@@ -30,6 +30,7 @@ defmodule Claper.Accounts.User do
           theme_background: String.t() | nil,
           theme_accent: String.t() | nil,
           theme_surface: String.t() | nil,
+          logo_path: String.t() | nil,
           events: [Claper.Events.Event.t()] | nil,
           role: Claper.Accounts.Role.t() | nil,
           role_id: integer() | nil,
@@ -51,6 +52,7 @@ defmodule Claper.Accounts.User do
     field :theme_background, :string
     field :theme_accent, :string
     field :theme_surface, :string
+    field :logo_path, :string
     field :deleted_at, :naive_datetime
 
     has_many :events, Claper.Events.Event

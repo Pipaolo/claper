@@ -34,6 +34,11 @@ defmodule ClaperWeb.UserSettingsLive.Show do
      |> assign(:profile_changeset, profile_changeset)
      |> assign(:preferences_changeset, preferences_changeset)
      |> assign(:theme_changeset, Accounts.User.theme_changeset(socket.assigns.current_user, %{}))
+     |> allow_upload(:logo,
+       accept: ~w(.png .jpg .jpeg .webp),
+       max_entries: 1,
+       max_file_size: 2_000_000
+     )
      |> assign(:is_external_user, oidc_accounts != [] or lti_accounts != [])
      |> assign(:oidc_accounts, oidc_accounts)
      |> assign(:lti_accounts, lti_accounts)
@@ -249,6 +254,43 @@ defmodule ClaperWeb.UserSettingsLive.Show do
   end
 
   @impl true
+  def handle_event("validate_logo", _params, socket), do: {:noreply, socket}
+
+  @impl true
+  def handle_event("save_logo", _params, socket) do
+    # The session's current_user can be stale, so replace whatever logo the database has.
+    user = Accounts.get_user!(socket.assigns.current_user.id)
+
+    stored =
+      consume_uploaded_entries(socket, :logo, fn %{path: path}, entry ->
+        extension = entry.client_name |> Path.extname() |> String.downcase()
+        {:ok, Accounts.store_user_logo(user, path, extension)}
+      end)
+
+    case stored do
+      [] ->
+        {:noreply, socket}
+
+      _stored ->
+        {:noreply,
+         socket
+         |> put_flash(:info, gettext("Your logo has been updated."))
+         |> redirect(to: ~p"/users/settings")}
+    end
+  end
+
+  @impl true
+  def handle_event("remove_logo", _params, socket) do
+    {:ok, _user} =
+      socket.assigns.current_user.id |> Accounts.get_user!() |> Accounts.remove_user_logo()
+
+    {:noreply,
+     socket
+     |> put_flash(:info, gettext("Your logo has been removed."))
+     |> redirect(to: ~p"/users/settings")}
+  end
+
+  @impl true
   def handle_event("save", %{"action" => "set_password"} = params, socket) do
     %{"user" => user_params} = params
 
@@ -284,6 +326,10 @@ defmodule ClaperWeb.UserSettingsLive.Show do
       {:theme_surface, gettext("Surface"), defaults["theme_surface"]}
     ]
   end
+
+  defp upload_error_message(:too_large), do: gettext("That file is over 2 MB.")
+  defp upload_error_message(:not_accepted), do: gettext("Use a PNG, JPG or WebP image.")
+  defp upload_error_message(_error), do: gettext("That upload didn't work, try another file.")
 
   defp set_locale(user) when is_nil(user.locale) do
     %{"locale" => "en"}

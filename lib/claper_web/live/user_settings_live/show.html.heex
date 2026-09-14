@@ -393,6 +393,45 @@
               </button>
             </div>
           </.form>
+          <.form
+            for={%{}}
+            id="update_logo"
+            phx-change="validate_logo"
+            phx-submit="save_logo"
+            class="mt-4 border-t border-base-300 pt-4"
+          >
+            <span class="text-xs font-medium text-base-content/60 uppercase tracking-wide">
+              {gettext("Logo")}
+            </span>
+            <div class="mt-2 flex flex-wrap items-center gap-3">
+              <ClaperWeb.BrandComponents.logo
+                variant={:mark}
+                user={@current_user}
+                class="h-12 w-12 rounded-lg bg-base-100 object-contain p-1"
+              />
+              <.live_file_input upload={@uploads.logo} class="file-input file-input-sm" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                {gettext("Upload logo")}
+              </button>
+              <button
+                :if={@current_user.logo_path}
+                type="button"
+                id="remove_logo"
+                phx-click="remove_logo"
+                class="btn btn-ghost btn-sm"
+              >
+                {gettext("Remove logo")}
+              </button>
+            </div>
+            <p class="mt-2 text-xs text-base-content/60">
+              {gettext(
+                "PNG, JPG or WebP, up to 2 MB. Shown instead of the Claper logo on your pages and events."
+              )}
+            </p>
+            <%= for entry <- @uploads.logo.entries, error <- upload_errors(@uploads.logo, entry) do %>
+              <p class="mt-1 text-xs text-error">{upload_error_message(error)}</p>
+            <% end %>
+          </.form>
         </div>
       </div>
     </div>

@@ -68,6 +68,48 @@ defmodule ClaperWeb.UserThemeTest do
     refute html =~ ":root:root{"
   end
 
+  defp user_with_logo do
+    {:ok, user} =
+      Accounts.store_user_logo(
+        confirmed_user_fixture(),
+        "priv/static/images/claper-mark.png",
+        ".png"
+      )
+
+    on_exit(fn ->
+      "/uploads/" <> file = user.logo_path
+      File.rm(Path.join([Application.get_env(:claper, :storage_dir), "uploads", file]))
+    end)
+
+    user
+  end
+
+  test "attendees of an event see the owner's logo instead of Claper's", %{conn: conn} do
+    owner = user_with_logo()
+    event = event_owned_by(owner)
+
+    {:ok, view, _html} = live(conn, ~p"/e/#{event.code}")
+
+    assert render(view) =~ ~s(src="#{owner.logo_path}")
+  end
+
+  test "the event manager shows the owner's logo", %{conn: conn} do
+    owner = user_with_logo()
+    event = event_owned_by(owner)
+
+    {:ok, view, _html} = conn |> log_in_user(owner) |> live(~p"/e/#{event.code}/manage")
+
+    assert render(view) =~ ~s(src="#{owner.logo_path}")
+  end
+
+  test "a user's own pages show their logo", %{conn: conn} do
+    user = user_with_logo()
+
+    {:ok, _view, html} = conn |> log_in_user(user) |> live(~p"/events")
+
+    assert html =~ ~s(src="#{user.logo_path}")
+  end
+
   test "on an event page the owner's colors win over the viewer's", %{conn: conn} do
     event = event_owned_by(themed_user())
     viewer = themed_user(%{"theme_accent" => "#FC85AE"})

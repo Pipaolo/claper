@@ -5,14 +5,22 @@ defmodule ClaperWeb.BrandComponents do
   use Gettext, backend: ClaperWeb.Gettext
 
   attr :variant, :atom, values: [:full, :mark], default: :full
+  attr :user, :any, default: nil, doc: "shows this user's uploaded logo when they have one"
   attr :class, :any, default: nil
 
-  @doc "Renders the Claper logo or compact mark."
+  @doc "Renders a user's uploaded logo, or the Claper logo or compact mark."
   def logo(assigns) do
-    assigns = assign(assigns, :src, logo_src(assigns.variant))
+    assigns =
+      case assigns.user do
+        %Claper.Accounts.User{logo_path: path} when is_binary(path) ->
+          assign(assigns, src: path, alt: gettext("Logo"))
+
+        _no_logo ->
+          assign(assigns, src: logo_src(assigns.variant), alt: gettext("Claper"))
+      end
 
     ~H"""
-    <img src={@src} alt={gettext("Claper")} class={@class} />
+    <img src={@src} alt={@alt} class={@class} />
     """
   end
 

@@ -41,6 +41,22 @@ defmodule ClaperWeb.BrandComponentsTest do
     assert html =~ ~s(src="/images/claper-mark.png")
   end
 
+  test "renders a user's uploaded logo in place of the Claper logo" do
+    user = %Claper.Accounts.User{logo_path: "/uploads/logos/brand.png"}
+
+    for variant <- [:full, :mark] do
+      html = render_component(&BrandComponents.logo/1, %{variant: variant, user: user})
+      assert html =~ ~s(src="/uploads/logos/brand.png")
+    end
+  end
+
+  test "falls back to the Claper logo for a user without one" do
+    html =
+      render_component(&BrandComponents.logo/1, %{variant: :mark, user: %Claper.Accounts.User{}})
+
+    assert html =~ ~s(src="/images/claper-mark.png")
+  end
+
   test "renders safe upstream attribution" do
     html = render_component(&BrandComponents.attribution/1, %{})
     assert html =~ "Powered by Claper"

@@ -88,6 +88,45 @@ defmodule ClaperWeb.UserSettingsLive.ShowTest do
     assert %{theme_accent: nil} = Accounts.get_user!(user.id)
   end
 
+  defp upload_logo(view) do
+    png = File.read!("priv/static/images/claper-mark.png")
+
+    view
+    |> file_input("#update_logo", :logo, [
+      %{name: "brand.png", content: png, size: byte_size(png), type: "image/png"}
+    ])
+    |> render_upload("brand.png")
+
+    view |> form("#update_logo") |> render_submit()
+  end
+
+  defp stored_logo_file("/uploads/" <> file),
+    do: Path.join([Application.get_env(:claper, :storage_dir), "uploads", file])
+
+  test "uploads a logo that replaces the Claper logo", %{conn: conn, user: user} do
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+
+    upload_logo(view)
+
+    assert_redirect(view, ~p"/users/settings")
+    assert %{logo_path: "/uploads/logos/" <> _ = logo_path} = Accounts.get_user!(user.id)
+    on_exit(fn -> File.rm(stored_logo_file(logo_path)) end)
+    assert File.exists?(stored_logo_file(logo_path))
+  end
+
+  test "removes the uploaded logo", %{conn: conn, user: user} do
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+    upload_logo(view)
+    %{logo_path: logo_path} = Accounts.get_user!(user.id)
+
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+    view |> element("#remove_logo") |> render_click()
+
+    assert_redirect(view, ~p"/users/settings")
+    assert %{logo_path: nil} = Accounts.get_user!(user.id)
+    refute File.exists?(stored_logo_file(logo_path))
+  end
+
   test "requires both names", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/users/settings/edit/profile")
 
