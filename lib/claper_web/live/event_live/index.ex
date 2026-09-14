@@ -205,19 +205,22 @@ defmodule ClaperWeb.EventLive.Index do
         "not_expired" ->
           Events.paginate_not_expired_events(socket.assigns.current_user.id, params, [
             :presentation_file,
-            :lti_resource
+            :lti_resource,
+            :user
           ])
 
         "expired" ->
           Events.paginate_expired_events(socket.assigns.current_user.id, params, [
             :presentation_file,
-            :lti_resource
+            :lti_resource,
+            :user
           ])
 
         "invited" ->
           Events.paginate_managed_events_by(socket.assigns.current_user.email, params, [
             :presentation_file,
-            :lti_resource
+            :lti_resource,
+            :user
           ])
       end
 

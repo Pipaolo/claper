@@ -40,7 +40,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
           <img src={@thumbnail_url} alt={@event.name} class="w-full h-full object-cover" />
         <% else %>
           <div class="flex h-full w-full items-center justify-center bg-base-200">
-            <ClaperWeb.BrandComponents.logo variant={:mark} class="h-12 w-12 opacity-30" />
+            <ClaperWeb.BrandComponents.logo
+              variant={:mark}
+              user={@event.user}
+              class="h-12 w-12 opacity-30"
+            />
           </div>
         <% end %>
         <!-- Processing Overlay -->
@@ -48,7 +52,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
           :if={@event.presentation_file.status == "progress"}
           class="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center gap-3"
         >
-          <ClaperWeb.BrandComponents.logo variant={:mark} class="h-12 w-12 animate-pulse" />
+          <ClaperWeb.BrandComponents.logo
+            variant={:mark}
+            user={@event.user}
+            class="h-12 w-12 animate-pulse"
+          />
           <span class="text-sm font-medium text-gray-600">{gettext("Processing...")}</span>
         </div>
       </div>
@@ -286,7 +294,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
               <img src={@thumbnail_url} alt={@event.name} class="w-full h-full object-cover" />
             <% else %>
               <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                <ClaperWeb.BrandComponents.logo variant={:mark} class="h-6 w-6 opacity-30" />
+                <ClaperWeb.BrandComponents.logo
+                  variant={:mark}
+                  user={@event.user}
+                  class="h-6 w-6 opacity-30"
+                />
               </div>
             <% end %>
             <!-- Processing Overlay -->
@@ -294,7 +306,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
               :if={@event.presentation_file.status == "progress"}
               class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center"
             >
-              <ClaperWeb.BrandComponents.logo variant={:mark} class="h-6 w-6 animate-pulse" />
+              <ClaperWeb.BrandComponents.logo
+                variant={:mark}
+                user={@event.user}
+                class="h-6 w-6 animate-pulse"
+              />
             </div>
           </div>
           
@@ -468,7 +484,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
 
             <%= if @event.presentation_file.status == "progress" do %>
               <div class="flex items-center gap-2">
-                <ClaperWeb.BrandComponents.logo variant={:mark} class="h-5 w-5 animate-pulse" />
+                <ClaperWeb.BrandComponents.logo
+                  variant={:mark}
+                  user={@event.user}
+                  class="h-5 w-5 animate-pulse"
+                />
                 <span class="text-sm text-gray-500">{gettext("Processing...")}</span>
               </div>
             <% end %>
@@ -539,7 +559,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
                 <img src={@thumbnail_url} alt={@event.name} class="w-full h-full object-cover" />
               <% else %>
                 <div class="w-full h-full flex items-center justify-center">
-                  <ClaperWeb.BrandComponents.logo variant={:mark} class="h-8 w-8 opacity-30" />
+                  <ClaperWeb.BrandComponents.logo
+                    variant={:mark}
+                    user={@event.user}
+                    class="h-8 w-8 opacity-30"
+                  />
                 </div>
               <% end %>
               <!-- Processing Overlay -->
@@ -547,7 +571,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
                 :if={@event.presentation_file.status == "progress"}
                 class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center"
               >
-                <ClaperWeb.BrandComponents.logo variant={:mark} class="h-8 w-8 animate-pulse" />
+                <ClaperWeb.BrandComponents.logo
+                  variant={:mark}
+                  user={@event.user}
+                  class="h-8 w-8 animate-pulse"
+                />
               </div>
             </div>
             
@@ -721,7 +749,11 @@ defmodule ClaperWeb.EventLive.EventCardComponent do
 
             <%= if @event.presentation_file.status == "progress" do %>
               <div class="flex items-center gap-2 px-3 py-2">
-                <ClaperWeb.BrandComponents.logo variant={:mark} class="h-5 w-5 animate-pulse" />
+                <ClaperWeb.BrandComponents.logo
+                  variant={:mark}
+                  user={@event.user}
+                  class="h-5 w-5 animate-pulse"
+                />
                 <span class="text-sm text-gray-500">{gettext("Processing...")}</span>
               </div>
             <% end %>

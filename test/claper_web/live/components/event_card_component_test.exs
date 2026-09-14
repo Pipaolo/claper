@@ -23,6 +23,14 @@ defmodule ClaperWeb.EventCardComponentTest do
     presentation_file
   end
 
+  defp with_logo(user) do
+    {:ok, user} =
+      Claper.Accounts.store_user_logo(user, "priv/static/images/claper-mark.png")
+
+    on_exit(fn -> File.rm(Claper.Accounts.logo_file(user.logo_path)) end)
+    user
+  end
+
   describe "EventCardComponent" do
     setup [:register_and_log_in_user]
 
@@ -59,6 +67,42 @@ defmodule ClaperWeb.EventCardComponentTest do
              )
 
       refute has_element?(view, ~s(#{card} img[src="/images/logo.svg"]))
+    end
+
+    test "shows the owner's logo when an event has no thumbnail", %{conn: conn, user: user} do
+      user = with_logo(user)
+      presentation_file = create_event(user, NaiveDateTime.utc_now(), nil, %{length: 0})
+      {:ok, view, _html} = live(conn, "/events")
+
+      assert has_element?(
+               view,
+               ~s(#event-#{presentation_file.event.id}-card img[src="#{user.logo_path}"])
+             )
+    end
+
+    test "shows the owner's logo while a presentation is processing", %{conn: conn, user: user} do
+      user = with_logo(user)
+      presentation_file = create_event(user, NaiveDateTime.utc_now(), nil, %{status: "progress"})
+      {:ok, view, _html} = live(conn, "/events")
+
+      assert has_element?(
+               view,
+               ~s(#event-#{presentation_file.event.id}-card img.animate-pulse[src="#{user.logo_path}"])
+             )
+    end
+
+    test "a shared event shows its owner's logo, not the viewer's", %{conn: conn, user: user} do
+      viewer = with_logo(user)
+      owner = with_logo(Claper.AccountsFixtures.user_fixture())
+      presentation_file = create_event(owner, NaiveDateTime.utc_now(), nil, %{length: 0})
+      activity_leader_fixture(%{event: presentation_file.event, user: viewer})
+
+      {:ok, view, _html} = live(conn, "/events")
+      render_click(view, "change-tab", %{"tab" => "invited"})
+
+      card = "#event-#{presentation_file.event.id}-card"
+      assert has_element?(view, ~s(#{card} img[src="#{owner.logo_path}"]))
+      refute has_element?(view, ~s(#{card} img[src="#{viewer.logo_path}"]))
     end
 
     test "uses the brand mark while a presentation is processing", %{conn: conn, user: user} do
