@@ -54,6 +54,7 @@ defmodule ClaperWeb.EventLive.Presenter do
           host
         )
         |> assign(:event, event)
+        |> assign(:owner_theme, ClaperWeb.LayoutView.theme_style_tag(event.user))
         |> assign(:iframe, !is_nil(params["iframe"]))
         |> assign(:state, event.presentation_file.presentation_state)
         |> assign(:posts, list_posts(socket, event.uuid))

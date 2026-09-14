@@ -38,6 +38,28 @@ defmodule ClaperWeb.Theme do
     {50, 0.97}
   ]
 
+  # The claper theme's own colors, as set in assets/css/theme-config.css.
+  @defaults %{
+    "theme_background" => "#303A52",
+    "theme_accent" => "#FC85AE",
+    "theme_surface" => "#2B354A"
+  }
+
+  @doc "The default theme's colors, keyed by the user's theme field."
+  def defaults, do: @defaults
+
+  @doc """
+  Blanks submitted colors equal to the default. A color picker can't be left empty,
+  so this keeps untouched pickers on the default theme instead of storing its hex.
+  """
+  def blank_defaults(params) do
+    Map.new(params, fn {field, color} ->
+      if is_binary(color) and String.upcase(color) == @defaults[field],
+        do: {field, ""},
+        else: {field, color}
+    end)
+  end
+
   @doc "Returns a `:root` rule overriding the theme tokens, or `\"\"` for the default theme."
   @spec css(User.t()) :: String.t()
   def css(%User{} = user) do
@@ -49,6 +71,7 @@ defmodule ClaperWeb.Theme do
       [] ->
         ""
 
+      # `:root:root` outranks the daisyUI theme's `:root`/`[data-theme]` selectors.
       vars ->
         ":root:root{" <>
           Enum.map_join(vars, fn {name, value} -> "--color-#{name}:#{value};" end) <> "}"

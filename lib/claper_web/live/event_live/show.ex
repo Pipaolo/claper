@@ -102,6 +102,7 @@ defmodule ClaperWeb.EventLive.Show do
       |> assign(:selected_quiz_question_opts, [])
       |> assign(:current_quiz_question_idx, 0)
       |> assign(:event, event)
+      |> assign(:owner_theme, ClaperWeb.LayoutView.theme_style_tag(event.user))
       |> assign(:state, event.presentation_file.presentation_state)
       |> assign(:slide_urls, slide_urls)
       |> assign(:current_slide_url, Enum.at(slide_urls, current_position))

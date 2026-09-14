@@ -20,11 +20,7 @@
       rel="stylesheet"
       href={static_path(ClaperWeb.Endpoint, "/assets/custom.css")}
     />
-    <%= if (css = theme_css(assigns)) != "" do %>
-      <style>
-        <%= raw(css) %>
-      </style>
-    <% end %>
+    {theme_style_tag(@current_user)}
     <script
       defer
       phx-track-static

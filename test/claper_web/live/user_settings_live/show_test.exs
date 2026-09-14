@@ -50,6 +50,23 @@ defmodule ClaperWeb.UserSettingsLive.ShowTest do
              Accounts.get_user!(user.id)
   end
 
+  test "pickers left on the default colors keep the default theme", %{conn: conn, user: user} do
+    {:ok, view, _html} = live(conn, ~p"/users/settings")
+
+    view
+    |> form("#update_theme", %{
+      "user" => %{
+        "theme_background" => "#303a52",
+        "theme_accent" => "#0473EA",
+        "theme_surface" => "#2b354a"
+      }
+    })
+    |> render_submit()
+
+    assert %{theme_background: nil, theme_accent: "#0473EA", theme_surface: nil} =
+             Accounts.get_user!(user.id)
+  end
+
   test "explains why a background is rejected", %{conn: conn} do
     {:ok, view, _html} = live(conn, ~p"/users/settings")
 

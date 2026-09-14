@@ -219,6 +219,8 @@ defmodule ClaperWeb.UserSettingsLive.Show do
 
   @impl true
   def handle_event("save", %{"action" => "update_theme", "user" => theme_params}, socket) do
+    theme_params = ClaperWeb.Theme.blank_defaults(theme_params)
+
     case Accounts.update_user_theme(socket.assigns.current_user, theme_params) do
       {:ok, _user} ->
         {:noreply,
@@ -274,10 +276,12 @@ defmodule ClaperWeb.UserSettingsLive.Show do
 
   # Pickers start on the default Claper colors when the user hasn't chosen any.
   defp theme_fields do
+    defaults = ClaperWeb.Theme.defaults()
+
     [
-      {:theme_background, gettext("Background"), "#303A52"},
-      {:theme_accent, gettext("Highlight"), "#FC85AE"},
-      {:theme_surface, gettext("Surface"), "#2B354A"}
+      {:theme_background, gettext("Background"), defaults["theme_background"]},
+      {:theme_accent, gettext("Highlight"), defaults["theme_accent"]},
+      {:theme_surface, gettext("Surface"), defaults["theme_surface"]}
     ]
   end
 

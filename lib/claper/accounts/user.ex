@@ -86,7 +86,7 @@ defmodule Claper.Accounts.User do
   end
 
   @theme_colors [:theme_background, :theme_accent, :theme_surface]
-  @hex_color ~r/^#[0-9A-F]{6}$/
+  @hex_color ~r/\A#[0-9A-F]{6}\z/
 
   @doc """
   A changeset for the user's presentation colors. Blank values restore the default theme.

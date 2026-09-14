@@ -70,6 +70,7 @@ defmodule ClaperWeb.EventLive.Manage do
       |> assign(:settings_modal, false)
       |> assign(:attendees_nb, 0)
       |> assign(:event, event)
+      |> assign(:owner_theme, ClaperWeb.LayoutView.theme_style_tag(event.user))
       |> assign(:sort_questions_by, "date")
       |> assign(:state, event.presentation_file.presentation_state)
       |> assign(:audio_token, audio_token)

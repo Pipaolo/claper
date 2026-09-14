@@ -19,6 +19,7 @@ defmodule ClaperWeb.StatLive.Index do
 
     event =
       Events.get_managed_event!(socket.assigns.current_user, id,
+        user: [],
         presentation_file: [
           polls: [:poll_opts],
           forms: [:form_submits],
@@ -43,6 +44,7 @@ defmodule ClaperWeb.StatLive.Index do
     {:ok,
      socket
      |> assign(:event, event)
+     |> assign(:owner_theme, ClaperWeb.LayoutView.theme_style_tag(event.user))
      |> assign(
        :distinct_poster_count,
        distinct_poster_count
