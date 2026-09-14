@@ -50,7 +50,6 @@ defmodule ClaperWeb.BrandingSurfaceTest do
     assert html =~ "Claper"
     assert html =~ @attribution
     assert title(html) == "Dashboard · Claper"
-    refute html =~ " · Claper"
   end
 
   test "admin chrome identifies Claper Admin and includes attribution", %{conn: conn} do
@@ -66,7 +65,6 @@ defmodule ClaperWeb.BrandingSurfaceTest do
     assert title(html) == "Dashboard · Claper Admin"
     assert html =~ ~s(data-theme="claper")
     refute html =~ ~s(data-theme="light")
-    refute html =~ " · Claper Admin"
   end
 
   test "audience join and presentation content omit upstream attribution", %{conn: conn} do
@@ -271,9 +269,6 @@ defmodule ClaperWeb.BrandingSurfaceTest do
     assert title(server_error_html) == "Not found - Claper"
     assert csrf_error_html =~ "Clear cookies (at least for Claper domain)"
 
-    for html <- [not_found_html, server_error_html, csrf_error_html] do
-      refute html =~ "Claper"
-    end
   end
 
   defp title(html) do
