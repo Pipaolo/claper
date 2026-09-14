@@ -114,6 +114,9 @@ defmodule Claper.Accounts.User do
     end)
   end
 
+  @doc "A changeset pointing the user at a stored logo, or clearing it with `nil`."
+  def logo_changeset(user, attrs), do: cast(user, attrs, [:logo_path])
+
   def profile_changeset(user, attrs) do
     user
     |> cast(attrs, [:first_name, :last_name])

@@ -261,21 +261,26 @@ defmodule ClaperWeb.UserSettingsLive.Show do
     # The session's current_user can be stale, so replace whatever logo the database has.
     user = Accounts.get_user!(socket.assigns.current_user.id)
 
-    stored =
-      consume_uploaded_entries(socket, :logo, fn %{path: path}, entry ->
-        extension = entry.client_name |> Path.extname() |> String.downcase()
-        {:ok, Accounts.store_user_logo(user, path, extension)}
+    results =
+      consume_uploaded_entries(socket, :logo, fn %{path: path}, _entry ->
+        {:ok, Accounts.store_user_logo(user, path)}
       end)
 
-    case stored do
+    case results do
       [] ->
         {:noreply, socket}
 
-      _stored ->
+      [{:ok, _user}] ->
         {:noreply,
          socket
          |> put_flash(:info, gettext("Your logo has been updated."))
          |> redirect(to: ~p"/users/settings")}
+
+      [{:error, :unsupported_image}] ->
+        {:noreply, put_flash(socket, :error, gettext("Use a PNG, JPG or WebP image."))}
+
+      [{:error, _changeset}] ->
+        {:noreply, put_flash(socket, :error, gettext("Your logo couldn't be saved, try again."))}
     end
   end
 

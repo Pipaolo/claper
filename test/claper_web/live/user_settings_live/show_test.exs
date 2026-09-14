@@ -100,9 +100,6 @@ defmodule ClaperWeb.UserSettingsLive.ShowTest do
     view |> form("#update_logo") |> render_submit()
   end
 
-  defp stored_logo_file("/uploads/" <> file),
-    do: Path.join([Application.get_env(:claper, :storage_dir), "uploads", file])
-
   test "uploads a logo that replaces the Claper logo", %{conn: conn, user: user} do
     {:ok, view, _html} = live(conn, ~p"/users/settings")
 
@@ -110,8 +107,8 @@ defmodule ClaperWeb.UserSettingsLive.ShowTest do
 
     assert_redirect(view, ~p"/users/settings")
     assert %{logo_path: "/uploads/logos/" <> _ = logo_path} = Accounts.get_user!(user.id)
-    on_exit(fn -> File.rm(stored_logo_file(logo_path)) end)
-    assert File.exists?(stored_logo_file(logo_path))
+    on_exit(fn -> File.rm(Accounts.logo_file(logo_path)) end)
+    assert File.exists?(Accounts.logo_file(logo_path))
   end
 
   test "removes the uploaded logo", %{conn: conn, user: user} do
@@ -124,7 +121,7 @@ defmodule ClaperWeb.UserSettingsLive.ShowTest do
 
     assert_redirect(view, ~p"/users/settings")
     assert %{logo_path: nil} = Accounts.get_user!(user.id)
-    refute File.exists?(stored_logo_file(logo_path))
+    refute File.exists?(Accounts.logo_file(logo_path))
   end
 
   test "requires both names", %{conn: conn} do

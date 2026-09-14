@@ -417,41 +417,56 @@ defmodule Claper.Accounts do
   end
 
   @doc """
-  Copies an uploaded logo into storage, points the user at it, and deletes the
-  logo it replaces. `extension` is the upload's extension, e.g. `".png"`.
+  Copies an uploaded logo into storage, points the user at it, and deletes the logo
+  it replaces. Returns `{:error, :unsupported_image}` unless the file is a PNG, JPEG
+  or WebP image.
   """
-  def store_user_logo(%User{} = user, source_path, extension) do
-    random = :crypto.strong_rand_bytes(8) |> Base.url_encode64(padding: false)
-    logo_path = "/uploads/logos/#{user.id}-#{random}#{extension}"
-    destination = logo_file(logo_path)
+  def store_user_logo(%User{} = user, source_path) do
+    with {:ok, extension} <- logo_extension(source_path) do
+      random = :crypto.strong_rand_bytes(8) |> Base.url_encode64(padding: false)
+      logo_path = "/uploads/logos/#{user.id}-#{random}#{extension}"
+      destination = logo_file(logo_path)
 
-    File.mkdir_p!(Path.dirname(destination))
-    File.cp!(source_path, destination)
+      File.mkdir_p!(Path.dirname(destination))
+      File.cp!(source_path, destination)
 
-    with {:ok, updated_user} <- set_user_logo(user, logo_path) do
-      delete_logo_file(user.logo_path)
-      {:ok, updated_user}
+      case user |> User.logo_changeset(%{logo_path: logo_path}) |> Repo.update() do
+        {:ok, updated_user} ->
+          delete_logo_file(user.logo_path)
+          {:ok, updated_user}
+
+        {:error, changeset} ->
+          File.rm(destination)
+          {:error, changeset}
+      end
     end
   end
 
   @doc "Removes the user's logo, falling back to the Claper logo."
   def remove_user_logo(%User{} = user) do
-    with {:ok, updated_user} <- set_user_logo(user, nil) do
+    with {:ok, updated_user} <- user |> User.logo_changeset(%{logo_path: nil}) |> Repo.update() do
       delete_logo_file(user.logo_path)
       {:ok, updated_user}
     end
   end
 
-  defp set_user_logo(user, logo_path) do
-    user |> Ecto.Changeset.change(logo_path: logo_path) |> Repo.update()
+  @doc "The file on disk behind a stored logo's `/uploads/...` path."
+  def logo_file("/uploads/" <> file),
+    do: Path.join([Application.get_env(:claper, :storage_dir), "uploads", file])
+
+  # The extension comes from the file's own header, never its client-supplied name,
+  # so /uploads/logos only ever serves real images (no HTML or SVG).
+  defp logo_extension(path) do
+    case File.open(path, [:read, :binary], &IO.binread(&1, 12)) do
+      {:ok, <<0x89, "PNG", 0x0D, 0x0A, 0x1A, 0x0A, _rest::binary>>} -> {:ok, ".png"}
+      {:ok, <<0xFF, 0xD8, 0xFF, _rest::binary>>} -> {:ok, ".jpg"}
+      {:ok, <<"RIFF", _size::binary-size(4), "WEBP">>} -> {:ok, ".webp"}
+      _other -> {:error, :unsupported_image}
+    end
   end
 
   defp delete_logo_file(nil), do: :ok
   defp delete_logo_file(logo_path), do: File.rm(logo_file(logo_path))
-
-  # Logos are served by the /uploads Plug.Static in ClaperWeb.Endpoint.
-  defp logo_file("/uploads/" <> file),
-    do: Path.join([Application.get_env(:claper, :storage_dir), "uploads", file])
 
   @doc """
   Delivers the magic link email to the given user.

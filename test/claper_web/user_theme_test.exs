@@ -70,16 +70,9 @@ defmodule ClaperWeb.UserThemeTest do
 
   defp user_with_logo do
     {:ok, user} =
-      Accounts.store_user_logo(
-        confirmed_user_fixture(),
-        "priv/static/images/claper-mark.png",
-        ".png"
-      )
+      Accounts.store_user_logo(confirmed_user_fixture(), "priv/static/images/claper-mark.png")
 
-    on_exit(fn ->
-      "/uploads/" <> file = user.logo_path
-      File.rm(Path.join([Application.get_env(:claper, :storage_dir), "uploads", file]))
-    end)
+    on_exit(fn -> File.rm(Accounts.logo_file(user.logo_path)) end)
 
     user
   end

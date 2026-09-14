@@ -54,6 +54,54 @@ defmodule Claper.AccountsTest do
     end
   end
 
+  describe "store_user_logo/2 and remove_user_logo/1" do
+    @png "priv/static/images/claper-mark.png"
+
+    defp tmp_file(contents) do
+      path = Path.join(System.tmp_dir!(), "logo-test-#{System.unique_integer([:positive])}")
+      File.write!(path, contents)
+      on_exit(fn -> File.rm(path) end)
+      path
+    end
+
+    defp cleanup_logo(%User{logo_path: logo_path}) do
+      on_exit(fn -> File.rm(Accounts.logo_file(logo_path)) end)
+    end
+
+    test "stores a PNG with a .png name, whatever the upload was called" do
+      {:ok, user} = Accounts.store_user_logo(user_fixture(), @png)
+      cleanup_logo(user)
+
+      assert "/uploads/logos/" <> _ = user.logo_path
+      assert String.ends_with?(user.logo_path, ".png")
+      assert File.read!(Accounts.logo_file(user.logo_path)) == File.read!(@png)
+    end
+
+    test "rejects a file that isn't a PNG, JPEG or WebP image" do
+      user = user_fixture()
+      html = tmp_file("<html><script>alert(1)</script></html>")
+
+      assert {:error, :unsupported_image} = Accounts.store_user_logo(user, html)
+      assert %User{logo_path: nil} = Accounts.get_user!(user.id)
+    end
+
+    test "replacing a logo deletes the previous file" do
+      {:ok, first} = Accounts.store_user_logo(user_fixture(), @png)
+      {:ok, second} = Accounts.store_user_logo(first, @png)
+      cleanup_logo(second)
+
+      refute File.exists?(Accounts.logo_file(first.logo_path))
+      assert File.exists?(Accounts.logo_file(second.logo_path))
+    end
+
+    test "removing a logo deletes its file" do
+      {:ok, user} = Accounts.store_user_logo(user_fixture(), @png)
+
+      assert {:ok, %User{logo_path: nil}} = Accounts.remove_user_logo(user)
+      refute File.exists?(Accounts.logo_file(user.logo_path))
+    end
+  end
+
   describe "get_user_by_email/1" do
     test "does not return the user if the email does not exist" do
       refute Accounts.get_user_by_email("unknown@example.com")

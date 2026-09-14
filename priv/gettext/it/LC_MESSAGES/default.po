@@ -1045,7 +1045,7 @@ msgstr "Ci siamo quasi"
 msgid "Set a new password for your account before unlinking it."
 msgstr "Imposta una nuova password per la tua utenza prima di scollegarla."
 
-#: lib/claper_web/live/user_settings_live/show.ex:305
+#: lib/claper_web/live/user_settings_live/show.ex:310
 #, elixir-autogen, elixir-format
 msgid "Your password has been set, you can now unlink your account."
 msgstr "La tua password è stata impostata, ora puoi scollegare la tua utenza."
@@ -3642,12 +3642,12 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:324
+#: lib/claper_web/live/user_settings_live/show.ex:329
 #, elixir-autogen, elixir-format
 msgid "Background"
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:325
+#: lib/claper_web/live/user_settings_live/show.ex:330
 #, elixir-autogen, elixir-format
 msgid "Highlight"
 msgstr ""
@@ -3662,7 +3662,7 @@ msgstr ""
 msgid "Save theme"
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:326
+#: lib/claper_web/live/user_settings_live/show.ex:331
 #, elixir-autogen, elixir-format
 msgid "Surface"
 msgstr ""
@@ -3703,12 +3703,12 @@ msgstr ""
 msgid "Remove logo"
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:330
+#: lib/claper_web/live/user_settings_live/show.ex:335
 #, elixir-autogen, elixir-format
 msgid "That file is over 2 MB."
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:332
+#: lib/claper_web/live/user_settings_live/show.ex:337
 #, elixir-autogen, elixir-format
 msgid "That upload didn't work, try another file."
 msgstr ""
@@ -3718,17 +3718,23 @@ msgstr ""
 msgid "Upload logo"
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:331
+#: lib/claper_web/live/user_settings_live/show.ex:280
+#: lib/claper_web/live/user_settings_live/show.ex:336
 #, elixir-autogen, elixir-format
 msgid "Use a PNG, JPG or WebP image."
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:289
+#: lib/claper_web/live/user_settings_live/show.ex:294
 #, elixir-autogen, elixir-format
 msgid "Your logo has been removed."
 msgstr ""
 
-#: lib/claper_web/live/user_settings_live/show.ex:277
+#: lib/claper_web/live/user_settings_live/show.ex:276
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Your logo has been updated."
 msgstr "Il tuo profilo è stato aggiornato."
+
+#: lib/claper_web/live/user_settings_live/show.ex:283
+#, elixir-autogen, elixir-format
+msgid "Your logo couldn't be saved, try again."
+msgstr ""
